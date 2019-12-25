@@ -5,10 +5,13 @@
             [ring.util.response :as ring-resp]
             [flickr-fetcher.controller :as controller]))
 
+(defn gallery-path []
+  (or (System/getenv "GALLERY_PATH") "flicker/feed"))
+
 (defn fetch-feed
   [{:keys [json-params]}]
   {:status 200
-   :body   (controller/fetch-feed! json-params)})
+   :body   (controller/fetch-feed! json-params (gallery-path))})
 
 (def common-interceptors [(body-params/body-params) http/json-body])
 

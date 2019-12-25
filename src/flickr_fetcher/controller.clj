@@ -5,8 +5,8 @@
 (defn with-media-binary! [item]
   (assoc item :media-binary (http-out/get-image (:media item))))
 
-(defn fetch-feed! [opts]
+(defn fetch-feed! [opts gallery-path]
   (->> (http-out/flickr-feed)
        (pmap with-media-binary!)
        (run! (fn [{:keys [title media-binary]}]
-               (image-manipulator/save-to-disk! title media-binary)))))
+               (image-manipulator/save-to-disk! gallery-path title media-binary)))))
