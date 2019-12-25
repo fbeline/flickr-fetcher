@@ -18,14 +18,14 @@
 
 (deftest flickr-feed-test
   (flow "Request with empty payload"
-        (is (= (:status (flickr-feed-request {}))
-               200)))
+        (is (= 200
+               (:status (flickr-feed-request {})))))
   (flow "Invalid payload returns bad request"
-        (is (= (:status (flickr-feed-request {:size {:height 10}}))
-               400)))
+        (is (= 400
+               (:status (flickr-feed-request {:size {:height 10}})))))
   (flow "Resize all images to 10x10"
-        (is (= (:status (flickr-feed-request {:size {:height 10 :width 10}}))
-               200)))
+        (is (= 200
+               (:status (flickr-feed-request {:size {:height 10 :width 10}})))))
   (flow "Returns only 3 images"
-        (is (= (:status (flickr-feed-request {:n 3}))
-               200))))
+        (is (= 200
+               (:status (flickr-feed-request {:n 3}))))))
