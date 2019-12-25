@@ -3,8 +3,7 @@
             [cuerdas.core :as str]
             [mikera.image.core :as mikera])
   (:import [javax.imageio ImageIO])
-  (:import java.io.File)
-  )
+  (:import java.io.File))
 
 (defn- sanitize-title [title]
   (-> title str/slug (str/prune 50)))

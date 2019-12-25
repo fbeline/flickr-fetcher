@@ -3,16 +3,26 @@
             [io.pedestal.http.route :as route]
             [io.pedestal.http.body-params :as body-params]
             [ring.util.response :as ring-resp]
-            [flickr-fetcher.controller :as controller]))
+            [flickr-fetcher.controller :as controller]
+            [clojure.spec.alpha :as s]))
+
+(s/def ::width int?)
+(s/def ::height int?)
+(s/def ::size (s/keys :req-un [::width ::height]))
+(s/def ::n int?)
+(s/def ::fetch-feed-payload (s/keys :opt-un [::n ::size]))
 
 (defn gallery-path []
   (or (System/getenv "GALLERY_PATH") "flickr/photos"))
 
 (defn fetch-feed
   [{:keys [json-params]}]
-  (controller/fetch-feed! {:width 50 :height 50} (gallery-path))
-  {:status 200
-   :body   {}})
+  (if (s/valid? ::fetch-feed-payload json-params)
+    (do (controller/fetch-feed! json-params (gallery-path))
+        {:status 200
+         :body   {}})
+    {:status 400
+     :body   {}}))
 
 (def common-interceptors [(body-params/body-params) http/json-body])
 

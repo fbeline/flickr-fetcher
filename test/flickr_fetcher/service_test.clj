@@ -17,6 +17,15 @@
                 :body (json/generate-string payload)))
 
 (deftest flickr-feed-test
-  (flow
-   (is (= (:body (flickr-feed-request {}))
-          "{}"))))
+  (flow "Request with empty payload"
+        (is (= (:status (flickr-feed-request {}))
+               200)))
+  (flow "Invalid payload returns bad request"
+        (is (= (:status (flickr-feed-request {:size {:height 10}}))
+               400)))
+  (flow "Resize all images to 10x10"
+        (is (= (:status (flickr-feed-request {:size {:height 10 :width 10}}))
+               200)))
+  (flow "Returns only 3 images"
+        (is (= (:status (flickr-feed-request {:n 3}))
+               200))))
