@@ -2,16 +2,17 @@
   (:require [io.pedestal.http :as http]
             [io.pedestal.http.route :as route]
             [io.pedestal.http.body-params :as body-params]
-            [ring.util.response :as ring-resp]))
+            [ring.util.response :as ring-resp]
+            [flickr-fetcher.controller :as controller]))
 
-(defn download-feed
+(defn fetch-feed
   [{:keys [json-params]}]
   {:status 200
-   :body   {}})
+   :body   (controller/fetch-feed! json-params)})
 
 (def common-interceptors [(body-params/body-params) http/json-body])
 
-(def routes #{["/flickr/feed" :post (conj common-interceptors `download-feed)]})
+(def routes #{["/flickr/feed" :post (conj common-interceptors `fetch-feed)]})
 
 (def service {:env :prod
               ::http/routes routes
