@@ -1,11 +1,13 @@
 (ns flickr-fetcher.http-out
   (:require [clj-http.client :as client]
             [cheshire.core :as json]
-            [flickr-fetcher.adapters :as adapters]))
+            [flickr-fetcher.adapters :as adapters])
+(:import [javax.imageio ImageIO]))
 
 (defn get-image [url]
-  (-> (client/get url {:as :byte-array})
-      :body))
+  (-> (client/get url {:as :stream})
+      :body
+      ImageIO/read))
 
 (defn flickr-feed []
   (some-> "https://www.flickr.com/services/feeds/photos_public.gne?format=json&nojsoncallback=1"

@@ -10,7 +10,7 @@
 
 (defn fetch-feed
   [{:keys [json-params]}]
-  (controller/fetch-feed! json-params (gallery-path))
+  (controller/fetch-feed! {:width 50 :height 50} (gallery-path))
   {:status 200
    :body   {}})
 
