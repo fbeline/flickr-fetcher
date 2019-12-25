@@ -5,6 +5,10 @@
 (defn- sanitize-title [title]
   (-> title str/slug (str/prune 50)))
 
+(defn resize-image [binary]
+  ;; TODO
+  )
+
 (defn save-to-disk! [path title binary]
   (if (not (nil? binary))
     (let [file-name (str path (sanitize-title title) ".jpg")]

@@ -3,7 +3,8 @@
             [io.pedestal.test :refer :all]
             [io.pedestal.http :as bootstrap]
             [flickr-fetcher.service :as service]
-            [cheshire.core :as json]))
+            [cheshire.core :as json]
+            [flickr-fetcher.test-helper :refer [flow]]))
 
 (def service
   (::bootstrap/service-fn (bootstrap/create-servlet service/service)))
@@ -16,6 +17,6 @@
                 :body (json/generate-string payload)))
 
 (deftest flickr-feed-test
-  (is (=
-       (:body (flickr-feed-request {}))
-       "{}")))
+  (flow
+   (is (= (:body (flickr-feed-request {}))
+          "{}"))))

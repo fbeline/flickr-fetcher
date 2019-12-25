@@ -6,12 +6,13 @@
             [flickr-fetcher.controller :as controller]))
 
 (defn gallery-path []
-  (or (System/getenv "GALLERY_PATH") "flicker/feed"))
+  (or (System/getenv "GALLERY_PATH") "flickr/photos"))
 
 (defn fetch-feed
   [{:keys [json-params]}]
+  (controller/fetch-feed! json-params (gallery-path))
   {:status 200
-   :body   (controller/fetch-feed! json-params (gallery-path))})
+   :body   {}})
 
 (def common-interceptors [(body-params/body-params) http/json-body])
 
