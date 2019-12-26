@@ -22,7 +22,6 @@
              :media "https://live.staticflickr.com/65535/49274621432_358e024ec0_m.jpg"
              :published "2019-12-25T18:08:13Z"}]))))
 
-
 (def internal-feed
   [{:file-name    "foo.jpg"
     :media-binary (BufferedImage. 16 16 BufferedImage/TYPE_INT_ARGB)}])
