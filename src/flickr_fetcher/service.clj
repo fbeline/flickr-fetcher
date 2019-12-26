@@ -13,7 +13,7 @@
 (s/def ::fetch-feed-payload (s/keys :opt-un [::limit ::size]))
 
 (defn gallery-path []
-  (or (System/getenv "GALLERY_PATH") "flickr/photos"))
+  (or (System/getenv "GALLERY_PATH") "flickr/photos/"))
 
 (defn fetch-feed [{:keys [json-params]}]
   (let [response (controller/fetch-feed! json-params (gallery-path))]
