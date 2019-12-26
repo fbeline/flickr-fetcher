@@ -13,7 +13,16 @@ curl -X POST http://localhost:8080/api/flickr/feed \
   -d '{"limit": 5, "size": {"width": 50, "height": 50}}' -v
 ```
 
-3. The downloaded images will be at `{project}/flickr/photos/`
+3. Downloaded images default location: `{project}/flickr/photos/`
+
+## Payload attributes
+
+There is no required attribute.
+
+| attr        |                                                                        |
+|-------------|------------------------------------------------------------------------|
+| limit       | specify the number of images to return                                 |
+| size        | specify a resize width and height, ex: `{"width": 120, "height": 120}` |
 
 ## HTTP status references
 
