@@ -8,6 +8,7 @@
 (defn flickr-feed-request-resize []
   (->> (flickr-feed-request {:n 2 :size {:height 10 :width 10}})
        :body
+       :images
        (map :size)))
 
 (deftest flickr-feed-test
@@ -18,10 +19,10 @@
   (flow "Invalid payload returns bad request"
         (is (= 400
                (:status (flickr-feed-request {:size {:height 10}})))))
-  (flow "Save only 3 images"
+  (flow "Save only 1 images"
         (is (= 201
-               (:status (flickr-feed-request {:n 3}))))
-        (is (= 3 (th/images-count))))
+               (:status (flickr-feed-request {:n 1}))))
+        (is (= 1 (th/images-count))))
   (flow "Save and resize images to 10x10"
         (is (= [{:width 10 :height 10}
                 {:width 10 :height 10}]

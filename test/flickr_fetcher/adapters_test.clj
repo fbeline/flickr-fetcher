@@ -30,6 +30,6 @@
 (deftest feed-internal->wire
   (testing "On feed internal to wire"
     (is (= (adapters/feed-internal->wire internal-feed)
-           [{:image "foo.jpg"
-             :size  {:width  16
-                     :height 16}}]))))
+           {:images [{:image "foo.jpg"
+                      :size  {:width  16
+                              :height 16}}]}))))

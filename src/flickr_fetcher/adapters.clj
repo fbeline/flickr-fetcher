@@ -15,8 +15,9 @@
                    :published published}))))
 
 (defn feed-internal->wire [feed-internal]
-  (map (fn [{:keys [media-binary file-name]}]
-         {:image file-name
-          :size  {:width  (.getWidth media-binary)
-                  :height (.getHeight media-binary)}})
-   feed-internal))
+  {:images
+   (map (fn [{:keys [media-binary file-name]}]
+          {:image file-name
+           :size  {:width  (.getWidth media-binary)
+                   :height (.getHeight media-binary)}})
+        feed-internal)})
