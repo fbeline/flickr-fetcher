@@ -10,7 +10,7 @@ Download images from flickr feed.
 ```bash
 curl -X POST http://localhost:8080/api/flickr/feed \
   -H "Content-Type: application/json" \
-  -d '{"n": 5, "size": {"width": 50, "height": 50}}' -v
+  -d '{"limit": 5, "size": {"width": 50, "height": 50}}' -v
 ```
 
 3. The downloaded images will be at `{project}/flickr/photos/`

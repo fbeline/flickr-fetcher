@@ -9,8 +9,8 @@
 (s/def ::width int?)
 (s/def ::height int?)
 (s/def ::size (s/keys :req-un [::width ::height]))
-(s/def ::n int?)
-(s/def ::fetch-feed-payload (s/keys :opt-un [::n ::size]))
+(s/def ::limit int?)
+(s/def ::fetch-feed-payload (s/keys :opt-un [::limit ::size]))
 
 (defn gallery-path []
   (or (System/getenv "GALLERY_PATH") "flickr/photos"))

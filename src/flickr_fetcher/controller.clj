@@ -10,9 +10,9 @@
     (update item :media-binary (partial image-manipulator/resize-image width height))
     item))
 
-(defn fetch-feed! [{:keys [size n]} gallery-path]
+(defn fetch-feed! [{:keys [size limit]} gallery-path]
   (->> (http-out/flickr-feed)
-       (#(if n (take n %) %))
+       (#(if limit (take limit %) %))
        (pmap with-media-binary!)
        (pmap (partial resize-image size))
        (mapv (fn [{:keys [file-name media-binary] :as item}]
