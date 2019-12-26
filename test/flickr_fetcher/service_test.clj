@@ -4,7 +4,7 @@
             [io.pedestal.http :as bootstrap]
             [flickr-fetcher.service :as service]
             [cheshire.core :as json]
-            [flickr-fetcher.test-helper :refer [flow]]))
+            [flickr-fetcher.test-helper :refer [flow images-count]]))
 
 (def service
   (::bootstrap/service-fn (bootstrap/create-servlet service/service)))
@@ -28,4 +28,5 @@
                (:status (flickr-feed-request {:size {:height 10 :width 10}})))))
   (flow "Returns only 3 images"
         (is (= 200
-               (:status (flickr-feed-request {:n 3}))))))
+               (:status (flickr-feed-request {:n 3}))))
+        (is (= 3 (images-count)))))
