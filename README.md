@@ -29,8 +29,8 @@ There is no required attribute.
 | status |                                                         |
 |--------|---------------------------------------------------------|
 | 200    | Success, but no images were saved.                      |
-| 201    | Success with one or more new resources being created.   |
-| 400    | Invalid payload.                                        |
+| 201    | Success with one or more images being created.          |
+| 400    | Invalid request payload.                                |
 | 413    | No space left on disk.                                  |
 
 ## Images location
@@ -39,8 +39,6 @@ You can set the enviroment variable `GALLERY_PATH` in order to choose where the
 images will be saved.
 
 ## Running the tests
-
-Running both integration and unit tests.
 
 ```
 lein test
