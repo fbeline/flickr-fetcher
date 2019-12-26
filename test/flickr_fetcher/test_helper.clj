@@ -1,8 +1,15 @@
 (ns flickr-fetcher.test-helper
-  (:require  [flickr-fetcher.service :refer [gallery-path]]))
+  (:require  [flickr-fetcher.service :refer [gallery-path]]
+             [flickr-fetcher.service :as service]
+             [io.pedestal.test :refer :all]
+             [io.pedestal.http :as bootstrap]
+             [cheshire.core :as json]))
+
+(def service
+  (::bootstrap/service-fn (bootstrap/create-servlet service/service)))
 
 (defn delete-recursively [fname]
-;; snippet from https://gist.github.com/edw/5128978
+  ;; snippet from https://gist.github.com/edw/5128978
   (let [func (fn [func f]
                (when (.isDirectory f)
                  (doseq [f2 (.listFiles f)]
@@ -17,8 +24,20 @@
       count
       dec))
 
-(defmacro flow [description & body]
-  (println (str "> " description))
+(defn- parse-body [body]
+  (println body)
+  (when body
+    (json/parse-string body true)))
+
+(defn http-request [method url payload]
+  (update
+   (response-for service
+                 method url
+                 :headers {"Content-Type" "application/json"}
+                 :body (json/generate-string payload))
+   :body parse-body))
+
+(defmacro flow [_ & body]
   `(try
      (with-redefs [gallery-path (fn [] "flickr/test/photos/")]
        ~@body)
