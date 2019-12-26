@@ -29,11 +29,11 @@
                 {:width 10 :height 10}]
                (flickr-feed-request-resize))))
   (flow "Save no images if n = 0"
-        (is (= 201
+        (is (= 200
                (:status (flickr-feed-request {:n 0}))))
         (is (zero? (th/images-count))))
   (flow "Save no images if n is negative"
-        (is (= 201
+        (is (= 200
                (:status (flickr-feed-request {:n -100}))))
         (is (zero? (th/images-count))))
   (flow "No space left on disk"

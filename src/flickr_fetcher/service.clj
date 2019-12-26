@@ -16,8 +16,9 @@
   (or (System/getenv "GALLERY_PATH") "flickr/photos"))
 
 (defn fetch-feed [{:keys [json-params]}]
-  {:status 201
-   :body   (controller/fetch-feed! json-params (gallery-path))})
+  (let [response (controller/fetch-feed! json-params (gallery-path))]
+    {:status (if (-> response count pos?) 201 200)
+     :body   response}))
 
 (def routes #{["/api/flickr/feed"
                :post (conj common-interceptors
