@@ -22,6 +22,11 @@
     [{:exception-type :java.lang.AssertionError :interceptor ::validate-payload}]
     (assoc ctx :response {:status 400 :body {}})
 
+    [{:exception-type :java.io.IOException}]
+    (if (= (:cause (Throwable->map ex)) "No space left on device")
+      (assoc ctx :response {:status 413 :body {}})
+      (assoc ctx :io.pedestal.interceptor.chain/error ex))
+
     :else
     (assoc ctx :io.pedestal.interceptor.chain/error ex)))
 

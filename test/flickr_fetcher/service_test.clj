@@ -1,5 +1,6 @@
 (ns flickr-fetcher.service-test
   (:require [clojure.test :refer :all]
+            [flickr-fetcher.image-manipulator :refer [save-to-disk!]]
             [flickr-fetcher.test-helper :refer [flow] :as th]))
 
 (defn flickr-feed-request [payload]
@@ -34,4 +35,8 @@
   (flow "Save no images if n is negative"
         (is (= 201
                (:status (flickr-feed-request {:n -100}))))
-        (is (zero? (th/images-count)))))
+        (is (zero? (th/images-count))))
+  (flow "No space left on disk"
+        (with-redefs [save-to-disk! (fn [_ _ _] (throw (java.io.IOException. "No space left on device")))]
+          (is (= 413
+                 (:status (flickr-feed-request {:n 1})))))))

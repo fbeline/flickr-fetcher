@@ -15,6 +15,6 @@
        (#(if n (take n %) %))
        (pmap with-media-binary!)
        (pmap (partial resize-image size))
-       (pmap (fn [{:keys [file-name media-binary] :as item}]
+       (mapv (fn [{:keys [file-name media-binary] :as item}]
                (image-manipulator/save-to-disk! gallery-path file-name media-binary)
                item))))
