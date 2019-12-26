@@ -8,11 +8,22 @@ Download images from flickr feed.
 2. Download images from flickr feed.
 
 ```bash
-curl -X POST http://localhost:8080/api/flickr/feed -H "Content-Type:
-application/json" -d '{"n": 5, "size": {:width 50 :height 50}}' -v
+curl -X POST http://localhost:8080/api/flickr/feed \                                                                                                                          fox@fox-System-Product-Name
+  -H "Content-Type: application/json" \
+  -d '{"n": 5, "size": {"width": 50, "height": 50}}' -v
+
 ```
 
 3. The downloaded images will be at `{project}/flickr/photos/`
+
+## HTTP status references
+
+| status |                                                         |
+|--------|---------------------------------------------------------|
+| 200    | Success, but no images were saved.                      |
+| 201    | Success with one or more new resources being created.   |
+| 400    | Invalid payload.                                        |
+| 413    | No space left on disk.                                  |
 
 ## Images location
 
