@@ -1,9 +1,10 @@
 (ns flickr-fetcher.test-helper
-  (:require  [flickr-fetcher.service :refer [gallery-path]]
+  (:require  [cheshire.core :as json]
+             [clojure.test :as t]
+             [flickr-fetcher.service :refer [gallery-path]]
              [flickr-fetcher.service :as service]
-             [io.pedestal.test :refer :all]
              [io.pedestal.http :as bootstrap]
-             [cheshire.core :as json]))
+             [io.pedestal.test :refer :all]))
 
 (def service
   (::bootstrap/service-fn (bootstrap/create-servlet service/service)))
@@ -25,7 +26,6 @@
       dec))
 
 (defn- parse-body [body]
-  (println body)
   (when body
     (json/parse-string body true)))
 
@@ -37,10 +37,11 @@
                  :body (json/generate-string payload))
    :body parse-body))
 
-(defmacro flow [_ & body]
+(defmacro flow [d & body]
   `(try
      (with-redefs [gallery-path (fn [] "flickr/test/photos/")]
-       ~@body)
+       (t/testing ~d
+         ~@body))
      (finally
        (when (.exists (clojure.java.io/as-file "flickr/test/"))
          (delete-recursively "flickr/test/")))))

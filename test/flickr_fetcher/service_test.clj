@@ -22,7 +22,15 @@
         (is (= 201
                (:status (flickr-feed-request {:n 3}))))
         (is (= 3 (th/images-count))))
-  (flow "Resize all images to 10x10"
+  (flow "Save and resize images to 10x10"
         (is (= [{:width 10 :height 10}
                 {:width 10 :height 10}]
-               (flickr-feed-request-resize)))))
+               (flickr-feed-request-resize))))
+  (flow "Save no images if n = 0"
+        (is (= 201
+               (:status (flickr-feed-request {:n 0}))))
+        (is (zero? (th/images-count))))
+  (flow "Save no images if n is negative"
+        (is (= 201
+               (:status (flickr-feed-request {:n -100}))))
+        (is (zero? (th/images-count)))))

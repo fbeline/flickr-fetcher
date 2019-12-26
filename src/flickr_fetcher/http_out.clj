@@ -1,6 +1,6 @@
 (ns flickr-fetcher.http-out
-  (:require [clj-http.client :as client]
-            [cheshire.core :as json]
+  (:require [cheshire.core :as json]
+            [clj-http.client :as client]
             [flickr-fetcher.adapters :as adapters])
 (:import [javax.imageio ImageIO]))
 

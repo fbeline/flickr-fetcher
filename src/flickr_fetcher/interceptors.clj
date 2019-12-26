@@ -1,8 +1,8 @@
 (ns flickr-fetcher.interceptors
-  (:require [io.pedestal.http.body-params :as body-params]
-            [io.pedestal.interceptor.error :as error-int]
+  (:require [clojure.spec.alpha :as s]
             [io.pedestal.http :as http]
-            [clojure.spec.alpha :as s]))
+            [io.pedestal.http.body-params :as body-params]
+            [io.pedestal.interceptor.error :as error-int]))
 
 (defn validate-payload [spec]
   {:name ::validate-payload

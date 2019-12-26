@@ -19,4 +19,5 @@
   :profiles {:dev {:aliases {"run-dev" ["trampoline" "run" "-m" "flickr-fetcher.server/run-dev"]}
                    :dependencies [[io.pedestal/pedestal.service-tools "0.5.7"]]}
              :uberjar {:aot [flickr-fetcher.server]}}
+  :plugins [[lein-nsorg "0.3.0"]]
   :main ^{:skip-aot true} flickr-fetcher.server)

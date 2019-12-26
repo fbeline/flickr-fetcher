@@ -1,10 +1,10 @@
 (ns flickr-fetcher.service
-  (:require [io.pedestal.http :as http]
-            [io.pedestal.http.route :as route]
-            [flickr-fetcher.controller :as controller]
+  (:require [clojure.spec.alpha :as s]
             [flickr-fetcher.adapters :as adapters]
-            [flickr-fetcher.interceptors :refer [common-interceptors validate-payload externalize]]
-            [clojure.spec.alpha :as s]))
+            [flickr-fetcher.controller :as controller]
+            [flickr-fetcher.interceptors :refer [common-interceptors externalize validate-payload]]
+            [io.pedestal.http :as http]
+            [io.pedestal.http.route :as route]))
 
 (s/def ::width int?)
 (s/def ::height int?)

@@ -1,6 +1,7 @@
 (ns flickr-fetcher.adapters-test
-  (:require [flickr-fetcher.adapters :as adapters]
-            [clojure.test :refer :all]))
+  (:require [clojure.test :refer :all]
+            [flickr-fetcher.adapters :as adapters])
+  (:import java.awt.image.BufferedImage))
 
 (def flickr-response
   {:items [{:author "nobody@flickr.com (\"noelbussang\")",
@@ -17,5 +18,18 @@
   (testing "On feed wire to internal"
     (is (= (adapters/feed-wire->internal flickr-response)
            [{:title "FaceApp_1527885430098"
+             :file-name "faceapp_1527885430098.jpg"
              :media "https://live.staticflickr.com/65535/49274621432_358e024ec0_m.jpg"
              :published "2019-12-25T18:08:13Z"}]))))
+
+
+(def internal-feed
+  [{:file-name    "foo.jpg"
+    :media-binary (BufferedImage. 16 16 BufferedImage/TYPE_INT_ARGB)}])
+
+(deftest feed-internal->wire
+  (testing "On feed internal to wire"
+    (is (= (adapters/feed-internal->wire internal-feed)
+           [{:image "foo.jpg"
+             :size  {:width  16
+                     :height 16}}]))))
