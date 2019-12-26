@@ -6,10 +6,10 @@
             [io.pedestal.http :as http]
             [io.pedestal.http.route :as route]))
 
-(s/def ::width int?)
-(s/def ::height int?)
+(s/def ::width pos-int?)
+(s/def ::height pos-int?)
 (s/def ::size (s/keys :req-un [::width ::height]))
-(s/def ::limit int?)
+(s/def ::limit pos-int?)
 (s/def ::fetch-feed-payload (s/keys :opt-un [::limit ::size]))
 
 (defn gallery-path []

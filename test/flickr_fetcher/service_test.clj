@@ -20,6 +20,9 @@
   (flow "Invalid payload returns bad request"
         (is (= 400
                (:status (flickr-feed-request {:size {:height 10}})))))
+  (flow "Negative limit returns bad request"
+        (is (= 400
+               (:status (flickr-feed-request {:limit -10})))))
   (flow "Save only 1 images"
         (is (= 201
                (:status (flickr-feed-request {:limit 1}))))
@@ -28,14 +31,6 @@
         (is (= [{:width 10 :height 10}
                 {:width 10 :height 10}]
                (flickr-feed-request-resize))))
-  (flow "Save no images if limit is zero"
-        (is (= 200
-               (:status (flickr-feed-request {:limit 0}))))
-        (is (zero? (th/images-count))))
-  (flow "Save no images if limit is negative"
-        (is (= 200
-               (:status (flickr-feed-request {:limit -100}))))
-        (is (zero? (th/images-count))))
   (flow "No space left on disk"
         (with-redefs [save-to-disk! (fn [_ _ _] (throw (java.io.IOException. "No space left on device")))]
           (is (= 413

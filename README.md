@@ -24,6 +24,8 @@ There is no required attribute.
 | limit       | specify the number of images to return                                 |
 | size        | specify a resize width and height, ex: `{"width": 120, "height": 120}` |
 
+limit, size/width and size/height must be positive numbers greater than zero.
+
 ## HTTP status references
 
 | status |                                                         |
